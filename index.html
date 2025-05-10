@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insta-Kids | Premium Kids Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background-color: #ec4899;
+            color: white;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ec4899;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .drawer.open {
+            transform: translateX(0);
+        }
+        
+        .drawer.closed {
+            transform: translateX(100%);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-image {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+            
+            .category-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .category-btn {
+                margin-bottom: 8px;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="gradient-bg shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-child text-3xl text-pink-500"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Insta-<span class="text-pink-500">Kids</span></h1>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-700 hover:text-pink-500 font-medium">Home</a>
+                    <a href="#products" class="text-gray-700 hover:text-pink-500 font-medium">Products</a>
+                    <a href="#categories" class="text-gray-700 hover:text-pink-500 font-medium">Categories</a>
+                    <a href="#about" class="text-gray-700 hover:text-pink-500 font-medium">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-pink-500 font-medium">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="cart-btn" class="text-gray-700 hover:text-pink-500">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-badge" class="cart-badge hidden">0</span>
+                        </button>
+                    </div>
+                    <button class="md:hidden text-gray-700" id="mobile-menu-btn">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full left-0 px-4 py-2">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-pink-500">Home</a>
+            <a href="#products" class="block py-2 text-gray-700 hover:text-pink-500">Products</a>
+            <a href="#categories" class="block py-2 text-gray-700 hover:text-pink-500">Categories</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-pink-500">About</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-pink-500">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg py-12 md:py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0 hero-content">
+                <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4 hero-title">Premium Products for Your <span class="text-pink-500">Little Ones</span></h1>
+                <p class="text-gray-600 mb-6 text-base md:text-lg hero-subtitle">Discover the finest collection of toys, clothes, and equipment for children under 10 years.</p>
+                <button class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                    Shop Now
+                </button>
+            </div>
+            <div class="md:w-1/2 flex justify-center hero-image">
+                <img src="https://images.unsplash.com/photo-1542816417-09836757a343?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                     alt="Happy Kids" class="rounded-lg shadow-xl w-full max-w-md h-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 md:mb-12 section-title">Shop By Category</h2>
+            <div class="flex flex-wrap justify-center gap-4 mb-8 category-buttons">
+                <button class="category-btn active px-4 py-2 rounded-full border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition" data-category="all">All</button>
+                <button class="category-btn px-4 py-2 rounded-full border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition" data-category="toys">Toys</button>
+                <button class="category-btn px-4 py-2 rounded-full border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition" data-category="clothing">Clothing</button>
+                <button class="category-btn px-4 py-2 rounded-full border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition" data-category="equipment">Equipment</button>
+                <button class="category-btn px-4 py-2 rounded-full border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white transition" data-category="accessories">Accessories</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 md:mb-12 section-title">Featured Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 product-grid" id="products-container">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <img src="https://images.unsplash.com/photo-1601924635307-bda0a7067a3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                         alt="About Insta-Kids" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">About <span class="text-pink-500">Insta-Kids</span></h2>
+                    <p class="text-gray-600 mb-3 md:mb-4">At Insta-Kids, we believe that childhood should be filled with joy, creativity, and quality products that inspire growth and happiness.</p>
+                    <p class="text-gray-600 mb-3 md:mb-4">Founded in 2020, our mission has been to provide parents with access to the finest children's products that are safe, durable, and designed to stimulate young minds.</p>
+                    <p class="text-gray-600 mb-4 md:mb-6">All our products undergo rigorous safety testing and are made from child-friendly materials that meet international standards.</p>
+                    <button class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 md:mb-12 section-title">What Parents Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="bg-white p-4 md:p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-3 md:mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">"The quality of Insta-Kids products is exceptional. My daughter loves her new dress and it has held up perfectly through multiple washes."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." class="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-medium text-gray-800 text-sm md:text-base">Sarah J.</h4>
+                            <p class="text-xs md:text-sm text-gray-500">Mother of 2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-3 md:mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">"The educational toys from Insta-Kids have been fantastic for my son's development. He's learning while having fun!"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-medium text-gray-800 text-sm md:text-base">Michael T.</h4>
+                            <p class="text-xs md:text-sm text-gray-500">Father of 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-3 md:mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">"Fast delivery and excellent customer service. The baby equipment we purchased is sturdy and safe - exactly what we wanted."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Lisa M." class="w-8 h-8 md:w-10 md:h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-medium text-gray-800 text-sm md:text-base">Lisa M.</h4>
+                            <p class="text-xs md:text-sm text-gray-500">Mother of 3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 md:mb-12 section-title">Contact Us</h2>
+            <div class="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-6 md:p-8">
+                <form id="contact-form">
+                    <div class="mb-4 md:mb-6">
+                        <label for="name" class="block text-gray-700 font-medium mb-2 text-sm md:text-base">Your Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm md:text-base">
+                    </div>
+                    <div class="mb-4 md:mb-6">
+                        <label for="email" class="block text-gray-700 font-medium mb-2 text-sm md:text-base">Email Address</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm md:text-base">
+                    </div>
+                    <div class="mb-4 md:mb-6">
+                        <label for="message" class="block text-gray-700 font-medium mb-2 text-sm md:text-base">Your Message</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm md:text-base"></textarea>
+                    </div>
+                    <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 w-full text-sm md:text-base">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-3 md:mb-4">
+                        <i class="fas fa-child text-2xl md:text-3xl text-pink-400"></i>
+                        <h3 class="text-xl md:text-2xl font-bold">Insta-<span class="text-pink-400">Kids</span></h3>
+                    </div>
+                    <p class="text-gray-300 text-sm md:text-base">Premium products for your little ones. Quality, safety, and joy in every purchase.</p>
+                </div>
+                <div>
+                    <h4 class="text-base md:text-lg font-semibold mb-2 md:mb-4">Quick Links</h4>
+                    <ul class="space-y-1 md:space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Home</a></li>
+                        <li><a href="#products" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Products</a></li>
+                        <li><a href="#categories" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Categories</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-base md:text-lg font-semibold mb-2 md:mb-4">Customer Service</h4>
+                    <ul class="space-y-1 md:space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">FAQs</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Returns & Exchanges</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-pink-400 transition text-sm md:text-base">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-base md:text-lg font-semibold mb-2 md:mb-4">Connect With Us</h4>
+                    <div class="flex space-x-3 md:space-x-4 mb-3 md:mb-4">
+                        <a href="#" class="text-gray-300 hover:text-pink-400 text-lg md:text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-pink-400 text-lg md:text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-pink-400 text-lg md:text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-pink-400 text-lg md:text-xl"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                    <p class="text-gray-300 mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-envelope mr-2"></i> hello@instakids.com</p>
+                    <p class="text-gray-300 text-sm md:text-base"><i class="fas fa-phone mr-2"></i> +91 74112 22678</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400 text-sm md:text-base">
+                <p>&copy; 2023 Insta-Kids. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Drawer -->
+    <div id="cart-drawer" class="drawer fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-xl z-50 overflow-y-auto closed">
+        <div class="p-4 md:p-6">
+            <div class="flex justify-between items-center mb-4 md:mb-6">
+                <h3 class="text-lg md:text-xl font-bold text-gray-800">Your Cart</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="mb-4 md:mb-6">
+                <!-- Cart items will be dynamically inserted here -->
+                <div id="empty-cart-message" class="text-center py-6 md:py-8">
+                    <i class="fas fa-shopping-cart text-3xl md:text-4xl text-gray-300 mb-3 md:mb-4"></i>
+                    <p class="text-gray-500 text-sm md:text-base">Your cart is empty</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-3 md:pt-4 mb-3 md:mb-4">
+                <div class="flex justify-between mb-1 md:mb-2">
+                    <span class="text-gray-600 text-sm md:text-base">Subtotal</span>
+                    <span id="cart-subtotal" class="font-medium text-sm md:text-base">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-1 md:mb-2">
+                    <span class="text-gray-600 text-sm md:text-base">Shipping</span>
+                    <span class="font-medium text-sm md:text-base">Calculated at checkout</span>
+                </div>
+                <div class="flex justify-between text-base md:text-lg font-bold mt-3 md:mt-4">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+            
+            <button id="whatsapp-order-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 md:py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-sm md:text-base">
+                <i class="fab fa-whatsapp mr-2 text-lg md:text-xl"></i> Order via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto mx-4">
+            <div class="p-4 md:p-6">
+                <div class="flex justify-between items-start mb-3 md:mb-4">
+                    <h3 id="modal-product-name" class="text-xl md:text-2xl font-bold text-gray-800"></h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                    <div class="md:w-1/2">
+                        <img id="modal-product-image" src="" alt="" class="w-full rounded-lg">
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <p id="modal-product-description" class="text-gray-600 mb-3 md:mb-4 text-sm md:text-base"></p>
+                        
+                        <div class="flex items-center mb-3 md:mb-4">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm md:text-base">(24 reviews)</span>
+                        </div>
+                        
+                        <div class="mb-4 md:mb-6">
+                            <span id="modal-product-price" class="text-2xl md:text-3xl font-bold text-pink-500"></span>
+                            <span id="modal-product-original-price" class="text-base md:text-lg text-gray-400 line-through ml-2"></span>
+                            <span id="modal-product-discount" class="bg-pink-100 text-pink-600 text-xs md:text-sm font-medium ml-2 px-2 py-0.5 rounded"></span>
+                        </div>
+                        
+                        <div class="mb-4 md:mb-6">
+                            <label for="quantity" class="block text-gray-700 font-medium mb-1 md:mb-2 text-sm md:text-base">Quantity</label>
+                            <div class="flex items-center">
+                                <button id="decrement-qty" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 md:py-2 px-3 md:px-4 rounded-l">
+                                    <i class="fas fa-minus text-xs md:text-sm"></i>
+                                </button>
+                                <input type="number" id="quantity" value="1" min="1" class="w-12 md:w-16 text-center border-t border-b border-gray-300 py-1 md:py-2 text-sm md:text-base">
+                                <button id="increment-qty" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 md:py-2 px-3 md:px-4 rounded-r">
+                                    <i class="fas fa-plus text-xs md:text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col space-y-2 md:space-y-3">
+                            <button id="add-to-cart-modal" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 md:py-3 px-4 rounded-lg transition duration-300 text-sm md:text-base">
+                                Add to Cart
+                            </button>
+                            <button id="buy-now-modal" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 md:py-3 px-4 rounded-lg transition duration-300 text-sm md:text-base">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "Educational Building Blocks",
+                price: 29.99,
+                originalPrice: 39.99,
+                category: "toys",
+                image: "https://images.unsplash.com/photo-1594787318279-cb1f5c1e0f1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Colorful building blocks set that helps develop creativity and motor skills. 100 pieces with storage bag."
+            },
+            {
+                id: 2,
+                name: "Organic Cotton T-Shirt",
+                price: 19.99,
+                originalPrice: 24.99,
+                category: "clothing",
+                image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Soft organic cotton t-shirt with fun prints. Available in multiple colors and sizes from 2T to 10."
+            },
+            {
+                id: 3,
+                name: "Adjustable Study Desk",
+                price: 89.99,
+                originalPrice: 109.99,
+                category: "equipment",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Ergonomic study desk with height adjustment to grow with your child. Includes storage drawer."
+            },
+            {
+                id: 4,
+                name: "Interactive Learning Tablet",
+                price: 49.99,
+                originalPrice: 59.99,
+                category: "toys",
+                image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Educational tablet with 50+ learning activities covering math, reading, and science."
+            },
+            {
+                id: 5,
+                name: "Waterproof Backpack",
+                price: 34.99,
+                originalPrice: 39.99,
+                category: "accessories",
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Durable waterproof backpack with multiple compartments and adjustable straps. Perfect for school."
+            },
+            {
+                id: 6,
+                name: "Wooden Puzzle Set",
+                price: 24.99,
+                originalPrice: 29.99,
+                category: "toys",
+                image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Set of 6 wooden puzzles with different difficulty levels. Helps develop problem-solving skills."
+            },
+            {
+                id: 7,
+                name: "Cotton Hoodie",
+                price: 27.99,
+                originalPrice: 34.99,
+                category: "clothing",
+                image: "https://images.unsplash.com/photo-1520975916090-3105956ee7c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Soft cotton hoodie with kangaroo pocket. Available in sizes 2T to 10 in various colors."
+            },
+            {
+                id: 8,
+                name: "Stroller Organizer",
+                price: 19.99,
+                originalPrice: 24.99,
+                category: "accessories",
+                image: "https://images.unsplash.com/photo-1598302936625-850d61a598ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                description: "Convenient stroller organizer with insulated bottle holders and multiple storage pockets."
+            }
+        ];
+
+        // Cart functionality
+        let cart = [];
+        
+        // DOM elements
+        const productsContainer = document.getElementById('products-container');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartBadge = document.getElementById('cart-badge');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const whatsappOrderBtn = document.getElementById('whatsapp-order-btn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const productModal = document.getElementById('product-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        // Initialize the app
+        function init() {
+            renderProducts('all');
+            setupEventListeners();
+        }
+        
+        // Render products based on category
+        function renderProducts(category) {
+            productsContainer.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            if (filteredProducts.length === 0) {
+                productsContainer.innerHTML = '<p class="text-gray-500 col-span-full text-center py-8">No products found in this category.</p>';
+                return;
+            }
+            
+            filteredProducts.forEach(product => {
+                const discount = product.originalPrice 
+                    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+                    : 0;
+                
+                const productElement = document.createElement('div');
+                productElement.className = 'product-card bg-white rounded-lg shadow-md overflow-hidden';
+                productElement.innerHTML = `
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-40 md:h-48 object-cover">
+                        ${discount > 0 ? `<span class="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded">${discount}% OFF</span>` : ''}
+                    </div>
+                    <div class="p-3 md:p-4">
+                        <h3 class="font-bold text-gray-800 mb-1 text-sm md:text-base">${product.name}</h3>
+                        <div class="flex items-center mb-1 md:mb-2">
+                            <div class="text-yellow-400 text-xs md:text-sm mr-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 text-xs">(24)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-base md:text-lg font-bold text-pink-500">$${product.price.toFixed(2)}</span>
+                            ${product.originalPrice ? `<span class="text-xs md:text-sm text-gray-400 line-through ml-2">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <button class="view-details-btn mt-2 md:mt-3 w-full bg-gray-100 hover:bg-pink-500 hover:text-white text-pink-500 font-medium py-2 px-3 md:px-4 rounded transition duration-300 text-xs md:text-sm" data-id="${product.id}">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                productsContainer.appendChild(productElement);
+            });
+            
+            // Add event listeners to view details buttons
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', () => openProductModal(parseInt(btn.dataset.id)));
+            });
+        }
+        
+        // Open product modal
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            document.getElementById('modal-product-name').textContent = product.name;
+            document.getElementById('modal-product-image').src = product.image;
+            document.getElementById('modal-product-image').alt = product.name;
+            document.getElementById('modal-product-description').textContent = product.description;
+            document.getElementById('modal-product-price').textContent = `$${product.price.toFixed(2)}`;
+            
+            if (product.originalPrice) {
+                document.getElementById('modal-product-original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+                const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+                document.getElementById('modal-product-discount').textContent = `${discount}% OFF`;
+            } else {
+                document.getElementById('modal-product-original-price').textContent = '';
+                document.getElementById('modal-product-discount').textContent = '';
+            }
+            
+            document.getElementById('quantity').value = 1;
+            
+            // Set up modal buttons
+            document.getElementById('add-to-cart-modal').onclick = () => {
+                addToCart(productId, parseInt(document.getElementById('quantity').value));
+                closeProductModal();
+            };
+            
+            document.getElementById('buy-now-modal').onclick = () => {
+                addToCart(productId, parseInt(document.getElementById('quantity').value));
+                closeProductModal();
+                openCart();
+            };
+            
+            productModal.classList.remove('hidden');
+        }
+        
+        // Close product modal
+        function closeProductModal() {
+            productModal.classList.add('hidden');
+        }
+        
+        // Add to cart
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+        }
+        
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+        
+        // Update cart quantity
+        function updateCartItemQuantity(productId, newQuantity) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity > 0 ? newQuantity : 1;
+                updateCart();
+            }
+        }
+        
+        // Update cart UI
+        function updateCart() {
+            // Update badge
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+            
+            // Update cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartSubtotal.textContent = '$0.00';
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            emptyCartMessage.classList.add('hidden');
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'flex py-3 md:py-4 border-b border-gray-200';
+                cartItemElement.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded">
+                    </div>
+                    <div class="ml-3 md:ml-4 flex-1 flex flex-col">
+                        <div class="flex justify-between text-sm md:text-base font-medium text-gray-800">
+                            <h3 class="text-xs md:text-sm">${item.name}</h3>
+                            <p class="ml-2 md:ml-4">$${(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                        <div class="flex-1 flex items-center justify-between text-xs md:text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <button class="decrement-qty text-gray-500 hover:text-gray-700" data-id="${item.id}">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <input type="number" value="${item.quantity}" min="1" class="w-10 md:w-12 text-center border-t border-b border-gray-300 py-1 mx-1 quantity-input" data-id="${item.id}">
+                                <button class="increment-qty text-gray-500 hover:text-gray-700" data-id="${item.id}">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <button class="remove-item text-pink-500 hover:text-pink-700" data-id="${item.id}">
+                                <i class="fas fa-trash text-xs md:text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItemElement);
+            });
+            
+            // Update totals
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTotal.textContent = `$${subtotal.toFixed(2)}`;
+            
+            // Add event listeners to cart item buttons
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            });
+            
+            document.querySelectorAll('.decrement-qty').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const item = cart.find(item => item.id === parseInt(btn.dataset.id));
+                    if (item) {
+                        updateCartItemQuantity(item.id, item.quantity - 1);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.increment-qty').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const item = cart.find(item => item.id === parseInt(btn.dataset.id));
+                    if (item) {
+                        updateCartItemQuantity(item.id, item.quantity + 1);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', () => {
+                    const newQuantity = parseInt(input.value);
+                    if (!isNaN(newQuantity) && newQuantity > 0) {
+                        updateCartItemQuantity(parseInt(input.dataset.id), newQuantity);
+                    }
+                });
+            });
+        }
+        
+        // Open cart
+        function openCart() {
+            cartDrawer.classList.remove('closed');
+            cartDrawer.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close cart
+        function closeCart() {
+            cartDrawer.classList.remove('open');
+            cartDrawer.classList.add('closed');
+            document.body.style.overflow = '';
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Cart buttons
+            cartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            
+            // Category filter buttons
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderProducts(btn.dataset.category);
+                });
+            });
+            
+            // Product modal
+            closeModalBtn.addEventListener('click', closeProductModal);
+            
+            // Quantity controls in modal
+            document.getElementById('decrement-qty').addEventListener('click', () => {
+                const input = document.getElementById('quantity');
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                }
+            });
+            
+            document.getElementById('increment-qty').addEventListener('click', () => {
+                const input = document.getElementById('quantity');
+                input.value = parseInt(input.value) + 1;
+            });
+            
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            
+            // Checkout buttons
+            
+            whatsappOrderBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                
+                let message = `Hello Insta-Kids! I would like to order the following items:\n\n`;
+                
+                cart.forEach(item => {
+                    message += `${item.name} - ${item.quantity} x $${item.price.toFixed(2)} = $${(item.quantity * item.price).toFixed(2)}\n`;
+                });
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                message += `\nTotal: $${total.toFixed(2)}\n\n`;
+                message += `My details:\nName: [Your Name]\nAddress: [Your Address]\nPhone: [Your Phone Number]`;
+                
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/917411222678?text=${encodedMessage}`, '_blank');
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === productModal) {
+                    closeProductModal();
+                }
+                
+                if (e.target === cartDrawer) {
+                    closeCart();
+                }
+            });
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
